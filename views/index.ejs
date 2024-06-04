@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Joke</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+</head>
+
+<body>
+    <h1>Let's hear a joke!</h1>
+    <div class="joke">
+    
+        <form action="/submit" method="POST">
+            <label for="dropdown">Select a category:</label>
+            <select id="dropdown" name="category">
+                <option value="Misc" <% if (locals.category === 'Misc') { %>selected<% } %>>Misc</option>
+                <option value="Programming" <% if (locals.category === 'Programming') { %>selected<% } %>>Programming</option>
+                <option value="Dark" <% if (locals.category === 'Dark') { %>selected<% } %>>Dark</option>
+                <option value="Spooky" <% if (locals.category === 'Spooky') { %>selected<% } %>>Spooky</option>
+                <option value="Pun" <% if (locals.category === 'Pun') { %>selected<% } %>>Pun</option>
+                <option value="Christmas" <% if (locals.category === 'Christmas') { %>selected<% } %>>Christmas</option>
+            </select> 
+            <input type="submit" value="OK">
+        </form>
+
+        <% if(locals.joke){ %>  
+            <p><%= joke %></p>
+        <% } %>  
+        <% if(locals.setup) { %>
+            <p><%= setup %></p>
+            <p><%= delivery %></p>   
+        <% } %> 
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdown = document.getElementById('dropdown');
+
+            dropdown.addEventListener('change', function () {
+                localStorage.setItem('selectedCategory', dropdown.value);
+            });
+
+            const storedCategory = localStorage.getItem('selectedCategory');
+            if (storedCategory) {
+                dropdown.value = storedCategory;
+            }
+        });
+    </script>
+</body>
+
+</html>
